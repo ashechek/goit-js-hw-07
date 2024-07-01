@@ -1,44 +1,47 @@
-function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, 0)}`;
-}
 
-const input = document.querySelector('[type="number"]');
-const createButton = document.querySelector('[data-create]');
-const destroyButton = document.querySelector('[data-destroy]');
-const boxesContainer = document.getElementById('boxes');
+    function getRandomHexColor() {
+      return `#${Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, 0)}`;
+    }
 
-function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, 0)}`;
-}
+    function createBoxes(amount) {
+      const boxesContainer = document.getElementById('boxes');
+      boxesContainer.innerHTML = '';
 
-function createBoxes(amount) {
-  for (let i = 0; i < amount; i++) {
-    const box = document.createElement('div');
-    const size = 30 + i * 10;
-    box.style.width = `${size}px`;
-    box.style.height = `${size}px`;
-    box.style.backgroundColor = getRandomHexColor();
-    boxesContainer.appendChild(box);
-  }
-}
+      const fragments = document.createDocumentFragment(); 
 
-function destroyBoxes() {
-  boxesContainer.innerHTML = '';
-}
+      let size = 30;
+      for (let i = 0; i < amount; i++) {
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.style.width = `${size}px`;
+        box.style.height = `${size}px`;
+        box.style.backgroundColor = getRandomHexColor();
+        fragments.appendChild(box);
+        size += 10;
+      }
 
-createButton.addEventListener('click', () => {
-  const amount = parseInt(input.value);
-  if (isNaN(amount) || amount < 1 || amount > 100) {
-    return;
-  }
+      boxesContainer.appendChild(fragments); 
+    }
 
-  destroyBoxes();
-  createBoxes(amount);
-  input.value = '';
-});
+    function destroyBoxes() {
+      const boxesContainer = document.getElementById('boxes');
+      boxesContainer.innerHTML = '';
+    }
 
-destroyButton.addEventListener('click', destroyBoxes);
+    const input = document.querySelector('input[type="number"]');
+    const createButton = document.querySelector('[data-create]');
+    const destroyButton = document.querySelector('[data-destroy]');
+
+    createButton.addEventListener('click', () => {
+      const amount = parseInt(input.value);
+      if (isNaN(amount) || amount < 1 || amount > 100) {
+        return;
+      }
+
+      createBoxes(amount);
+      input.value = '';
+    });
+
+    destroyButton.addEventListener('click', destroyBoxes);
