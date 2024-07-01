@@ -1,4 +1,4 @@
-  const images = [
+    const images = [
       {
         url: "https://images.pexels.com/photos/140134/pexels-photo-140134.jpeg?dpr=2&h=750&w=1260",
         alt: "Білий і чорний пухнастий кіт",
@@ -26,16 +26,12 @@
     ];
 
     const galleryList = document.querySelector('.gallery');
+    const galleryHTML = images.map(image => {
+      return `
+        <li>
+          <img src="${image.url}" alt="${image.alt}">
+        </li>
+      `;
+    }).join('');
 
-    const createGalleryItem = (image) => {
-      const galleryItem = document.createElement('li');
-      const galleryImage = document.createElement('img');
-      galleryImage.src = image.url;
-      galleryImage.alt = image.alt;
-      galleryItem.appendChild(galleryImage);
-      return galleryItem;
-    };
-
-    // Виправлення: перетворити масив galleryItems на рядок HTML
-    const galleryHTML = galleryItems.map(createGalleryItem).join('');
     galleryList.insertAdjacentHTML('beforeend', galleryHTML);
